@@ -1,14 +1,16 @@
 import os
+from Archives import Archives
 
 class Agenda:
     """
     Registo de atividades com opções de
     leitura, edição, exclusão e inserção
-    """
-    NOME_ARQUIVO = 'agenda_.txt'
+    """ 
+    __NOME_ARQUIVO = 'agenda_.txt'
 
     def __init__(self):
         self.menu()
+        locals()
 
     def clear_screen(self): 
         """
@@ -22,10 +24,10 @@ class Agenda:
     def visualizar(self): 
         self.clear_screen() 
         try: 
-            with open(self.NOME_ARQUIVO, 'r') as arquivo: 
-                line = arquivo.readlines() 
-                for contador, line in enumerate(line):
-                    print(f'{contador+1}.  {line}') 
+            arq = Archives()
+            lines = arq.readArchive() 
+            for contador, line in enumerate(lines):
+                print(f'{contador+1}.  {line}') 
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
@@ -37,21 +39,20 @@ class Agenda:
 
 
     def editar(self): 
-        novaAtividade = input('O que você deseja adicionar? ')
+        novaAtividade = input('O que você deseja editar? ')
         posicao = int(input('Qual a posição q voce deseja substituir? '))
 
         try: 
-            with open(self.NOME_ARQUIVO, 'r') as arquivo:
-                atividades = arquivo.readlines() 
-
-                if 1 <= posicao <= len(atividades): 
-                    atividades[posicao - 1] = novaAtividade+'\n' 
-                    
-                    with open(self.NOME_ARQUIVO, 'w') as arquivo:
-                        arquivo.writelines(atividades)
+            arq = Archives() 
+            atividades = arq.readArchive()  
+            if 1 <= posicao <= len(atividades): 
+                atividades[posicao - 1] = novaAtividade+'\n' 
                 
-                else:
-                    print('Não existe uma lista pre definida')
+                with open(self.__NOME_ARQUIVO, 'w') as arquivo:
+                    arquivo.writelines(atividades)
+            
+            else:
+                print('Não existe uma lista pre definida')
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
@@ -63,18 +64,17 @@ class Agenda:
     def buscar(self):
         termo = input('O que você está procurando? ')
         try: 
-            with open( self.NOME_ARQUIVO, 'r') as arquivo:
-                atividades = arquivo.readlines()
-
-                if atividades:
-                    resultados = [atividade.strip() for atividade in atividades if termo.strip().lower() in atividade.strip().lower()]
-                    print('--'*20)
-                    if resultados:
-                        for i, line in enumerate( resultados):
-                            print(f'{i+1}. {line}')
-                    else:
-                        print('NO RESULTS'.center(40))
-                    print('--'*20)
+            arq = Archives() 
+            atividades = arq.readArchive() 
+            if atividades:
+                resultados = [atividade.strip() for atividade in atividades if termo.strip().lower() in atividade.strip().lower()]
+                print('--'*20)
+                if resultados:
+                    for i, line in enumerate( resultados):
+                        print(f'{i+1}. {line}')
+                else:
+                    print('NO RESULTS'.center(40))
+                print('--'*20)
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
@@ -84,15 +84,15 @@ class Agenda:
 
     def excluir(self):
         try: 
-            with open(self.NOME_ARQUIVO, 'r') as arquivo:
-                atividades = arquivo.readlines()
+            arq = Archives()  
+            atividades = arq.readArchive()
             
             if atividades:
                 indice = int(input('Qual posição quer excluir? '))
                 if 1 <= indice <= len(atividades):
-                    atividades.pop(indice - 1) 
-                    with open(NOME_ARQUIVO, 'w') as arquivo:
-                        arquivo.writelines(atividades) 
+                    atividades.pop(indice - 1)  
+                    # print(atividades)
+                    arq.writeLinesArchive(atividades)
                 else:
                     raise ValueError('Indique uma posição existente')
             else:
@@ -107,16 +107,14 @@ class Agenda:
     def adicionar(self):
         atividade = input('O que você deseja adicionar? ')
         try: 
-            with open(self.NOME_ARQUIVO, 'a') as arquivo:
-                arquivo.write(atividade+'\n') 
+            archive = Archives()  
+            archive.writeArchive(atividade+'\n') 
             
             self.clear_screen()
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
-            print(ex)
-        finally:
-            if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
+            print(ex) 
     
 
     def opcoes(self):
@@ -155,6 +153,5 @@ class Agenda:
             else:
                 print('Opção não encontrada')
  
-
-if __name__ == '__main__':
-    agenda = Agenda() 
+ 
+agenda = Agenda() 
