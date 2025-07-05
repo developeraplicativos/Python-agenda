@@ -5,8 +5,7 @@ class Agenda:
     """
     Registo de atividades com opções de
     leitura, edição, exclusão e inserção
-    """ 
-    __NOME_ARQUIVO = 'agenda_.txt'
+    """  
 
     def __init__(self):
         self.menu()
