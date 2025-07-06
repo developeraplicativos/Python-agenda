@@ -2,7 +2,7 @@ class Archives:
     __NOME_ARQUIVO = 'agenda_.txt'
 
     def __init__(self):
-        self.__NOME_ARQUIVO = 'agenda_.txt'
+        self.__NOME_ARQUIVO = 'agenda_.txt' 
 
     def readArchive(self):
         try: 
@@ -28,6 +28,18 @@ class Archives:
         try: 
             with open(self.__NOME_ARQUIVO, 'a') as arquivo:
                 arquivo.write(conent)
+        except FileNotFoundError:
+            print('O Arquivo ainda não existe, você precisa cadastrar algo')
+        except Exception as ex:
+            print(ex)
+        finally:
+            if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
+
+    def editArchive(self, content):
+        try:
+            with open(self.__NOME_ARQUIVO, 'w') as arquivo:
+                arquivo.writelines(content)
+
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:

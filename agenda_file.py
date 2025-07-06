@@ -10,7 +10,7 @@ class Agenda:
     def __init__(self):
         self.menu()
         locals()
-
+    @property
     def clear_screen(self): 
         """
         Limpa a tela do console
@@ -19,9 +19,9 @@ class Agenda:
             os.system('cls')
         else:  
             os.system('clear')
-
+    
     def visualizar(self): 
-        self.clear_screen() 
+        self.clear_screen 
         try: 
             arq = Archives()
             lines = arq.readArchive() 
@@ -30,9 +30,7 @@ class Agenda:
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
-            print(ex)
-        finally:
-            if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
+            print(ex) 
     
 
 
@@ -46,9 +44,7 @@ class Agenda:
             atividades = arq.readArchive()  
             if 1 <= posicao <= len(atividades): 
                 atividades[posicao - 1] = novaAtividade+'\n' 
-                
-                with open(self.__NOME_ARQUIVO, 'w') as arquivo:
-                    arquivo.writelines(atividades)
+                arq.editArchive(atividades)
             
             else:
                 print('Não existe uma lista pre definida')
@@ -77,9 +73,7 @@ class Agenda:
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
-            print(ex)
-        finally:
-            if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
+            print(ex) 
 
     def excluir(self):
         try: 
@@ -99,9 +93,7 @@ class Agenda:
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
-            print(ex)
-        finally:
-            if 'arquivo' in locals() and not arquivo.closed: arquivo.close()     
+            print(ex) 
 
     def adicionar(self):
         atividade = input('O que você deseja adicionar? ')
@@ -109,7 +101,7 @@ class Agenda:
             archive = Archives()  
             archive.writeArchive(atividade+'\n') 
             
-            self.clear_screen()
+            self.clear_screen
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
