@@ -1,5 +1,6 @@
 import os
 from Archives import Archives
+from User import User
 
 class Agenda:
     """
@@ -8,8 +9,18 @@ class Agenda:
     """  
 
     def __init__(self):
-        self.menu()
-        locals()
+
+        result = False
+        user = User(None, None)
+        while result != True:
+            user.setEmail(input('Digite seu E-mail: '))
+            user.setSenha(input('Digete a senha: '))
+            result = user.login()
+
+        if user.login():
+            self.menu()
+            locals()
+        
     @property
     def clear_screen(self): 
         """
