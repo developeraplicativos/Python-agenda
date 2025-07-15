@@ -35,7 +35,7 @@ class Agenda:
         self.clear_screen 
         try: 
             arq = Archives()
-            lines = arq.readArchive() 
+            lines = arq.read_archive() 
             for contador, line in enumerate(lines):
                 print(f'{contador+1}.  {line}') 
         except FileNotFoundError:
@@ -52,10 +52,10 @@ class Agenda:
 
         try: 
             arq = Archives() 
-            atividades = arq.readArchive()  
+            atividades = arq.read_archive()  
             if 1 <= posicao <= len(atividades): 
                 atividades[posicao - 1] = novaAtividade+'\n' 
-                arq.editArchive(atividades)
+                arq.edit_archive(atividades)
             
             else:
                 print('Não existe uma lista pre definida')
@@ -71,7 +71,7 @@ class Agenda:
         termo = input('O que você está procurando? ')
         try: 
             arq = Archives() 
-            atividades = arq.readArchive() 
+            atividades = arq.read_archive() 
             if atividades:
                 resultados = [atividade.strip() for atividade in atividades if termo.strip().lower() in atividade.strip().lower()]
                 print('--'*20)
@@ -89,14 +89,14 @@ class Agenda:
     def excluir(self):
         try: 
             arq = Archives()  
-            atividades = arq.readArchive()
+            atividades = arq.read_archive()
             
             if atividades:
                 indice = int(input('Qual posição quer excluir? '))
                 if 1 <= indice <= len(atividades):
                     atividades.pop(indice - 1)  
                     # print(atividades)
-                    arq.writeLinesArchive(atividades)
+                    arq.write_lines_archive(atividades)
                 else:
                     raise ValueError('Indique uma posição existente')
             else:
@@ -110,7 +110,7 @@ class Agenda:
         atividade = input('O que você deseja adicionar? ')
         try: 
             archive = Archives()  
-            archive.writeArchive(atividade+'\n') 
+            archive.write_archive(atividade+'\n') 
             
             self.clear_screen
         except FileNotFoundError:

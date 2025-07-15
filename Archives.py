@@ -4,7 +4,7 @@ class Archives:
     def __init__(self):
         self.__NOME_ARQUIVO = 'agenda_.txt' 
 
-    def readArchive(self):
+    def read_archive(self):
         try: 
             with open(self.__NOME_ARQUIVO, 'r') as arquivo:  
                 return arquivo.readlines() 
@@ -13,7 +13,7 @@ class Archives:
         except Exception as ex:
             print(ex) 
 
-    def writeLinesArchive(self, conent):
+    def write_lines_archive(self, conent):
         try: 
             with open(self.__NOME_ARQUIVO, 'w') as arquivo:
                 arquivo.writelines(conent)
@@ -24,7 +24,7 @@ class Archives:
         finally:
             if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
 
-    def writeArchive(self, conent):
+    def write_archive(self, conent):
         try: 
             with open(self.__NOME_ARQUIVO, 'a') as arquivo:
                 arquivo.write(conent)
@@ -35,7 +35,7 @@ class Archives:
         finally:
             if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
 
-    def editArchive(self, content):
+    def edit_archive(self, content):
         try:
             with open(self.__NOME_ARQUIVO, 'w') as arquivo:
                 arquivo.writelines(content)
