@@ -1,8 +1,7 @@
-class Archives:
-    __NOME_ARQUIVO = 'agenda_.txt'
+class Archives: 
 
     def __init__(self):
-        self.__NOME_ARQUIVO = 'agenda_.txt' 
+        self.__NOME_ARQUIVO = 'arq/agenda_.txt' 
 
     def read_archive(self):
         try: 
