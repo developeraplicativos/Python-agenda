@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, make_response, redirect, url_for, render_template
+from datetime import datetime
+from agenda_file import Agenda
 
 app = Flask(__name__)
 
@@ -16,7 +18,19 @@ def home2():
 
 @app.route('/visualizar', methods=['GET'])
 def home3():
-    return jsonify({'add':True,'error':False})
+    lista_atividade = [
+        {'ordem':1,'nome':'correr'},
+        {'ordem':2,'nome':'ler'},
+        {'ordem':3,'nome':'tomar remédio'},
+        {'ordem':4,'nome':'trabalhar'} 
+    ]
+    agenda = Agenda()
+    lista_atividades = agenda.visualizar_linhas()
+    print([lista_atividades] )
+    # print(lista_atividades,'< nova')
+    # return jsonify({'visualizar': None,'error':False})
+    # return jsonify({'visualizar': agenda,'error':False})
+    return render_template('visualizar_agenda.html', agenda=lista_atividades, data=datetime.now() )
 
 @app.route('/editar', methods=['POST'])
 def home4(): 

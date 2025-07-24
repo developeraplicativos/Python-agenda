@@ -12,6 +12,16 @@ class Archives:
         except Exception as ex:
             print(ex) 
 
+    def read_lines_full(self):
+        try:  
+            with open(self.__NOME_ARQUIVO, 'r') as arquivo:  
+                for index, line in enumerate(arquivo): 
+                    yield {'ordem':index,'nome':f"{line.rstrip('\n')}"}
+        except FileNotFoundError:
+            print('O Arquivo ainda não existe, você precisa cadastrar algo')
+        except Exception as ex:
+            print(f"Ocorreu um erro: {ex}")  
+
     def write_lines_archive(self, conent):
         try: 
             with open(self.__NOME_ARQUIVO, 'w') as arquivo:

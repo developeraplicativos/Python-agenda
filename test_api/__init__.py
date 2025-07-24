@@ -11,8 +11,8 @@ else:
 
 res = requests.get('http://127.0.0.1:5000/visualizar')
 if(res.status_code == 200): 
-    if(res.json()['add'] == True): 
-        print('sucesso - /visualizar') 
+    if(res.json()['visualizar'] is not None): 
+        print(res.json()['visualizar']) 
     elif(res.json()['error'] == True):
         print(res.json()['msg'])
 else:

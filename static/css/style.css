@@ -1,0 +1,34 @@
+@font-face{
+    font-family: roboto; 
+    src: url(../fonts/roboto.ttf);
+}
+@font-face{
+    font-family: opensans; 
+    src: url(../fonts/opensans.ttf);
+}
+@font-face{
+    font-family: bitcount; 
+    src: url(../fonts/bitcount.ttf);
+}
+:root{
+    --color-primeira: #d0dbe1;
+    --color-segunda: #585c5f;
+    --color-terceira: #d0dbe1;
+    --color-quarta: #d0dbe1;
+    --color-quinta: #d0dbe1;
+}
+.bg-principal{
+    background: var(--color-primeira);
+}
+.text-segunda{
+    color: var(--color-segunda);
+}
+body, html{
+    font-family: opensans;
+}
+h1,h2,h3,h4{
+    font-family: roboto;
+}
+.bar-bottom{
+    background: linear-gradient(0.25turn, #0069c2eb, #0085f287);
+}

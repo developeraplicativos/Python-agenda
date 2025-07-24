@@ -13,13 +13,15 @@ class Agenda:
         result = False
         user = User(None, None)
         while result != True:
-            user.setEmail(input('Digite seu E-mail: '))
-            user.setSenha(input('Digete a senha: '))
+            # user.setEmail(input('Digite seu E-mail: '))
+            # user.setSenha(input('Digete a senha: '))
+            user.setEmail('emerson@gmail.com')
+            user.setSenha('12345')
             result = user.login()
 
-        if user.login():
-            self.menu()
-            locals()
+        # if user.login():
+        #     self.menu()
+        #     locals() para quer serve locals() ?????
         
     @property
     def clear_screen(self): 
@@ -31,20 +33,34 @@ class Agenda:
         else:  
             os.system('clear')
     
+
     def visualizar(self): 
         self.clear_screen 
         try: 
             arq = Archives()
             lines = arq.read_archive() 
-            for contador, line in enumerate(lines):
-                print(f'{contador+1}.  {line}') 
+            # for contador, line in enumerate(lines):
+            #     print(f'{contador+1}.  {line}') 
+            return lines
+
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
             print(ex) 
-    
 
+    def visualizar_linhas(self): 
+        self.clear_screen 
+        try: 
+            arq = Archives()
+            lines = list(arq.read_lines_full()) 
+            # for contador, line in enumerate(lines):
+            #     print(f'{contador+1}.  {line}') 
+            return lines
 
+        except FileNotFoundError:
+            print('O Arquivo ainda não existe, você precisa cadastrar algo')
+        except Exception as ex:
+            print(ex) 
 
     def editar(self): 
         novaAtividade = input('O que você deseja editar? ')
@@ -52,7 +68,8 @@ class Agenda:
 
         try: 
             arq = Archives() 
-            atividades = arq.read_archive()  
+            atividades = arq.read_archive()
+            
             if 1 <= posicao <= len(atividades): 
                 atividades[posicao - 1] = novaAtividade+'\n' 
                 arq.edit_archive(atividades)
@@ -60,11 +77,7 @@ class Agenda:
             else:
                 print('Não existe uma lista pre definida')
         except FileNotFoundError:
-            print('O Arquivo ainda não existe, você precisa cadastrar algo')
-        except Exception as ex:
-            print(ex)
-        finally:
-            if 'arquivo' in locals() and not arquivo.closed: arquivo.close()
+            print('O Arquivo ainda não existe, você precisa cadastrar algo') 
          
 
     def buscar(self):
@@ -106,6 +119,15 @@ class Agenda:
         except Exception as ex:
             print(ex) 
 
+
+    def reordenar(self, atividades): 
+        try:  
+            atividades = list(atividades)
+            arq = Archives()  
+            arq.edit_archive(atividades) 
+        except FileNotFoundError:
+            print('O Arquivo ainda não existe, você precisa cadastrar algo') 
+
     def adicionar(self):
         atividade = input('O que você deseja adicionar? ')
         try: 
@@ -128,6 +150,7 @@ class Agenda:
         print('3. '.ljust(30)+'Editar'.rjust(10))
         print('4. '.ljust(30)+'Buscar'.rjust(10))
         print('5. '.ljust(30)+'Excluir'.rjust(10)) 
+        print('6. '.ljust(30)+'Reordenar'.rjust(10)) 
         print('0. '.ljust(30)+'Sair'.rjust(10)) 
 
     def menu(self):
@@ -150,10 +173,12 @@ class Agenda:
             # excluir 
             elif opcao == '5':
                 self.excluir()
+            elif opcao == '6':
+                self.reordenar({'Julliana\n','Teteu\n','Elsa\n','Tita\n'})
             elif opcao == '0':
                 break
             else:
                 print('Opção não encontrada')
  
  
-agenda = Agenda() 
+# agenda = Agenda() 
