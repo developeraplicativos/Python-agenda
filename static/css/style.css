@@ -32,3 +32,8 @@ h1,h2,h3,h4{
 .bar-bottom{
     background: linear-gradient(0.25turn, #0069c2eb, #0085f287);
 }
+.filter-oks{
+    filter: grayscale(100%) sepia(100%) brightness(70%) hue-rotate(78deg) saturate(240%);
+    -webkit-filter: grayscale(100%) sepia(100%) brightness(70%) hue-rotate(78deg) saturate(240%);
+    -moz-filter: grayscale(100%) sepia(100%) brightness(70%) hue-rotate(78deg) saturate(240%);
+}

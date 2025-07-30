@@ -1,0 +1,32 @@
+
+{% extends "base.html" %}
+{% block title %} Visualizar {% endblock %}
+
+{% block content %} 
+    <section class="shadow rounded p-3 position-relative mb-4 bg-white overflow-hidden">
+        <h2>Projeto</h2> 
+        <form action="/adicionar" method="POST">
+            {% if form.atividade.errors %}
+            <p class="alert alert-warning w-100">{{ form.atividade.errors[0] }}</p>
+            {% endif %}
+            {% with messages = get_flashed_messages(with_categories=True) %}
+                {% if messages %}
+                    <ul class="flashes list-group list-group-flush ">
+                        {% for categories, message in messages %}
+                            <li class="{{categories}} list-unstyled">{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+            <div class="form-group mb-3">
+                {{form.hidden_tag()}}
+                <label for="atividade" class="form-label">{{form.atividade.label}}</label>
+                {{form.atividade(class='form-control')}}
+                <!-- <input type="text" placeholder="Nova atividade" class="form-control" name="atividade" id="atividade">  -->
+            </div>
+            <div class="d-flex">
+                <button class="ms-auto btn btn-success">Inserir</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}

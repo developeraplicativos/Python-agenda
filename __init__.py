@@ -1,8 +1,15 @@
-from flask import Flask, jsonify, make_response, redirect, url_for, render_template
+from flask import Flask, jsonify, request, flash, make_response, redirect, url_for, render_template
 from datetime import datetime
+from Archives import Archives
 from agenda_file import Agenda
+from FormsAtividades import FormsAtividades
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '12345-kjslfdjkljd' # temporario - apenas para apresentação
+'''wtforms secret keys contra csrf'''
+#app.config['SECRET_KEY'] = 'SDFSDF_FDSFSDFFFDS'
+#estudar flaskform
 
 @app.route('/')
 def home():
@@ -17,19 +24,9 @@ def home2():
     return jsonify({'access':True, 'error': False})
 
 @app.route('/visualizar', methods=['GET'])
-def home3():
-    lista_atividade = [
-        {'ordem':1,'nome':'correr'},
-        {'ordem':2,'nome':'ler'},
-        {'ordem':3,'nome':'tomar remédio'},
-        {'ordem':4,'nome':'trabalhar'} 
-    ]
+def visualizar(): 
     agenda = Agenda()
-    lista_atividades = agenda.visualizar_linhas()
-    print([lista_atividades] )
-    # print(lista_atividades,'< nova')
-    # return jsonify({'visualizar': None,'error':False})
-    # return jsonify({'visualizar': agenda,'error':False})
+    lista_atividades = agenda.visualizar_linhas() 
     return render_template('visualizar_agenda.html', agenda=lista_atividades, data=datetime.now() )
 
 @app.route('/editar', methods=['POST'])
@@ -45,10 +42,38 @@ def home5():
 def home6():
     return jsonify({'delete': True})
 
-@app.route('/adicionar', methods=['POST'])
-def home7():
-    return jsonify({'add': True})
- 
+@app.route('/adicionar', methods=['GET','POST']) 
+def adicionar():
+    form = FormsAtividades()
+    # if request.method == 'GET': 
+    #     return render_template('cadastro-atividade.html', form = form)
+            
+    if request.method == 'POST':
+        try:
+            if form.validate_on_submit():
+
+                archive = Archives()  
+                atividade = request.form.get('atividade')
+                if archive.write_archive(atividade+'\n') :
+                    flash("Nova atividade inserida com sucesso!", 'alert alert-success')
+            
+        except Exception as ex: 
+            flash(f"Erro ao salvar atividade: {ex}", "alert alert-warning") 
+            
+
+    return render_template('cadastro-atividade.html', form=form )
+
+        
+    
+    # return render_template('cadastro-atividade.html')
+
+# @app.route('/sucesso')
+# def sucesso():
+#     return "Cadastrado com Sucesso"
+
+# @app.route('/error')
+# def error():
+#     return "Erro durante o cadastro"
 
 if __name__ == "__main__":
     app.run(debug=True)

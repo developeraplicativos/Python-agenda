@@ -14,7 +14,7 @@ class Archives:
 
     def read_lines_full(self):
         try:  
-            with open(self.__NOME_ARQUIVO, 'r') as arquivo:  
+            with open(self.__NOME_ARQUIVO, 'r', encoding='utf-8') as arquivo:  
                 for index, line in enumerate(arquivo): 
                     yield {'ordem':index,'nome':f"{line.rstrip('\n')}"}
         except FileNotFoundError:
@@ -37,6 +37,7 @@ class Archives:
         try: 
             with open(self.__NOME_ARQUIVO, 'a') as arquivo:
                 arquivo.write(conent)
+                return True
         except FileNotFoundError:
             print('O Arquivo ainda não existe, você precisa cadastrar algo')
         except Exception as ex:
