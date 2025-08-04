@@ -10,6 +10,17 @@ def validateAtividade(form, field):
         raise ValidationError('Sua atividade deve possuir no minímo 4 caracteres')
     else:
         return True
+ 
+def validateEmail(form, field):
+    if len(field.data.strip()) < 3:
+        raise ValidationError('Sua atividade deve possuir no minímo 4 caracteres')
+    else:
+        return True
+def validateSenha(form, field):
+    if len(field.data.strip()) < 3:
+        raise ValidationError('Sua atividade deve possuir no minímo 4 caracteres')
+    else:
+        return True
 
 class FormsAtividades(FlaskForm):
     atividade = StringField("Atividade", validators=[DataRequired(), validateAtividade])
